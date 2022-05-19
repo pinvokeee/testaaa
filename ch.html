@@ -1,0 +1,135 @@
+<html>
+
+<head>
+    <script>
+        //document.oncontextmenu = function () {return false;}
+    </script>
+    <script src="https://unpkg.com/vue@next"></script>
+    <!-- CoreWebView2EnvironmentOptions op = new CoreWebView2EnvironmentOptions();
+    op.AdditionalBrowserArguments = "--disable-features=msWebOOUI,msPdfOOUI"; -->
+    <style>
+
+        body
+        {
+            font-size: 12pt;
+        }
+
+        input[type="text"]
+        {
+            padding: 4px;
+            font-size: 16pt;
+        }
+
+        ul
+        {
+            list-style: none;
+            padding: 0;
+        }
+        
+        ul.number_checker
+        {
+
+        }
+
+        ul.number_checker li
+        {
+            margin-top: 4px;
+            margin-bottom: 4px;
+            /* display: inline; */
+        }
+
+        span.registed
+        {
+           background-color: red; 
+        }
+
+        span.registed::before
+        {
+            content: "登録済み";
+        }
+
+        span.unregisted
+        {
+           background-color: red; 
+        }
+
+        span.unregisted::before
+        {
+            content: "登録外";
+        }
+
+        ul.iden_checker
+        {
+
+        }
+
+        ul.iden_checker li.head
+        {
+            background-color: orange;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div id="app">
+
+    <!-- 電話番号チェック -->
+    <ul class="number_checker">
+        <li><span :class="number_check.is_regiested ? 'registed' : 'unregisted'"></span></li>
+        <li><input v-model="number_check.first_number" @input="is_match_numbers"></li>
+        <li><input v-model="number_check.second_number" @input="is_match_numbers"></li>
+        <li></li>
+    </ul>
+
+    <!-- 登録外だった場合のチェック部 -->
+    <ul v-show="!number_check.is_regiested" class="iden_checker">
+
+        <li class="head">AAAA</li>
+        <li class="">BBB</li>
+
+    </ul>
+
+</div>
+        
+    <script type="text/javascript">
+
+        //アプリ作成
+        const app = 
+        {
+            //保持データ
+            data()
+            {
+                return {
+                    
+                    number_check:
+                    {
+                        first_number: "1111",
+                        second_number: "",
+                        is_regiested: false
+                    }
+
+                };
+            },
+
+            //イベントハンドラに使用するメソッド
+            methods:
+            {
+                is_match_numbers(event)
+                {
+                    const nc = this.number_check;
+                    nc.is_regiested = nc.first_number == nc.second_number;
+                    console.log(nc.is_regiested);
+                }
+            }
+        };
+
+        Vue.createApp(app).mount('#app')
+
+    </script>
+
+</body>
+
+</html>
